@@ -1,0 +1,16 @@
+{
+  "teams": [
+    {
+      "instructors": [
+        "pquint",
+        "sscott"
+      ]
+    },
+    {
+      "dropouts": [
+        "aagrawal",
+        "atendle"
+      ]
+    }
+  ]
+}
