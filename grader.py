@@ -14,18 +14,6 @@ parser.add_argument(
     default='teams.json',
     type=str,
     help='json containing teams')
-# parser.add_argument(
-#     'team_names',
-#     type=str,
-#     nargs='+',
-#     default=[],
-#     help='team name associated with each entry')
-# parser.add_argument(
-#     'model_dirs',
-#     type=str,
-#     nargs='+',
-#     default=[],
-#     help='directory where model graph and weights are saved')
 parser.add_argument(
     '--data_dir',
     type=str,
@@ -70,8 +58,6 @@ if __name__ == "__main__":
     with open(args.team_file, 'r') as team_file:
         team_list = json.load(team_file)['teams']
 
-    #assert (len(args.team_names) == len(args.model_dirs))
-
     # load datasets
     X_train, y_train = mnist_reader.load_mnist(args.data_dir, kind='train')
     X_test, y_test = mnist_reader.load_mnist(args.data_dir, kind='t10k')
@@ -81,18 +67,19 @@ if __name__ == "__main__":
     dt_now = datetime.datetime.now()
     for team in team_list:
         team_name = list(team.keys())[0]
-        for directory in list(team.values())[0]:
+        for username in list(team.values())[0]:
             try:
+                model_dir = '/home/grad/Classes/cse496e/handin/H1/'
                 # train
                 train_accuracy, train_confusion_matrix = score(
-                    directory, X_train, y_train)
+                    os.path.join(model_dir, username), X_train, y_train)
                 train_dict = {
                     'accuracy': float(train_accuracy),
                     'confusion_matrix': train_confusion_matrix.tolist()
                 }
                 # test
                 test_accuracy, test_confusion_matrix = score(
-                    directory, X_test, y_test)
+                    os.path.join(model_dir, username), X_test, y_test)
                 test_dict = {
                     'accuracy': float(test_accuracy),
                     'confusion_matrix': test_confusion_matrix.tolist()
