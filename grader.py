@@ -100,7 +100,7 @@ def score_teams():
                     'confusion_matrix': [[0.]]
                 }
                 test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
-                metadata_dict = {'error': e}
+                metadata_dict = {'error': str(e)}
                 score_dict = {
                     'train': train_dict,
                     'test': test_dict,
@@ -114,7 +114,7 @@ def score_teams():
                     'confusion_matrix': [[0.]]
                 }
                 test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
-                metadata_dict = {'error': e}
+                metadata_dict = {'error': str(e)}
                 score_dict = {
                     'train': train_dict,
                     'test': test_dict,
@@ -133,7 +133,7 @@ if __name__ == "__main__":
         with open('homework1_scores.json', 'r') as json_file:
             leaderboard_dict = json.load(json_file)
 
-        for key in leaderboard_dict.keys():
+        for key in team_dict.keys():
             leaderboard_dict[key] = {
                 **leaderboard_dict.get(key, dict()),
                 **team_dict[key]
@@ -143,6 +143,7 @@ if __name__ == "__main__":
 
     # write data
     with open('homework1_scores.json', 'w') as json_file:
-        json.dump(leaderboard_dict, json_file, sort_keys=True)
+        new_json = json.dumps(leaderboard_dict, sort_keys=True)
+        json_file.write(new_json)
     print(list(team_dict.keys()))
     print(team_dict)
