@@ -97,6 +97,7 @@ def score_teams():
                 pass
     return team_dict
 
+
 if __name__ == "__main__":
     team_dict = score_teams()
 
@@ -104,8 +105,12 @@ if __name__ == "__main__":
     if os.path.isfile('homework1_scores.json'):
         with open('homework1_scores.json', 'r') as json_file:
             leaderboard_dict = json.load(json_file)
+
         for key in leaderboard_dict.keys():
-            leaderboard_dict[key] = {**leaderboard_dict[key], **team_dict[key]}
+            leaderboard_dict[key] = {
+                **leaderboard_dict.get(key, dict()),
+                **team_dict[key]
+            }
     else:
         leaderboard_dict = team_dict
 
