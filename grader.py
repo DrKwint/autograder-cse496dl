@@ -3,7 +3,6 @@ import json
 import os
 import datetime
 
-import numpy as np
 import tensorflow as tf
 
 import mnist_reader
@@ -19,6 +18,7 @@ parser.add_argument(
     type=str,
     default='./data/fashion/',
     help='directory where data is located')
+parser.add_argument('--handin_dir', type=str, default='./submissions/H1/')
 args = parser.parse_args()
 
 
@@ -54,7 +54,7 @@ def unix_time_millis(dt):
     return (dt - epoch).total_seconds() * 1000.0
 
 
-if __name__ == "__main__":
+def score_teams():
     with open(args.team_file, 'r') as team_file:
         team_list = json.load(team_file)['teams']
 
@@ -64,22 +64,21 @@ if __name__ == "__main__":
 
     # score assignments
     team_dict = dict()
-    dt_now = datetime.datetime.now()
+    unix_now = unix_time_millis(datetime.datetime.now())
     for team in team_list:
         team_name = list(team.keys())[0]
         for username in list(team.values())[0]:
             try:
-                model_dir = '/home/grad/Classes/cse496e/handin/H1/'
                 # train
                 train_accuracy, train_confusion_matrix = score(
-                    os.path.join(model_dir, username), X_train, y_train)
+                    os.path.join(args.handin_dir, username), X_train, y_train)
                 train_dict = {
                     'accuracy': float(train_accuracy),
                     'confusion_matrix': train_confusion_matrix.tolist()
                 }
                 # test
                 test_accuracy, test_confusion_matrix = score(
-                    os.path.join(model_dir, username), X_test, y_test)
+                    os.path.join(args.handin_dir, username), X_test, y_test)
                 test_dict = {
                     'accuracy': float(test_accuracy),
                     'confusion_matrix': test_confusion_matrix.tolist()
@@ -92,12 +91,25 @@ if __name__ == "__main__":
                     'test': test_dict,
                     'metadata': metadata_dict
                 }
-                team_dict[unix_time_millis(dt_now)] = {team_name: score_dict}
+                team_dict[team_name] = {str(unix_now): score_dict}
                 break
             except IOError:
                 pass
+    return team_dict
 
-    with open('score' + str(unix_time_millis(dt_now)) + '.json',
-              'w') as json_file:
-        json.dump(team_dict, json_file, sort_keys=True)
-        print(json.dumps(team_dict, sort_keys=True))
+if __name__ == "__main__":
+    team_dict = score_teams()
+
+    # combine existing data with new
+    if os.path.isfile('homework1_score.json'):
+        with open('homework1_score.json', 'r') as json_file:
+            leaderboard_dict = json.load(json_file)
+        for key in leaderboard_dict.keys():
+            leaderboard_dict[key] = {**leaderboard_dict[key], **team_dict[key]}
+    else:
+        leaderboard_dict = team_dict
+
+    # write data
+    with open('homework1_score.json', 'w') as json_file:
+        json.dump(leaderboard_dict, json_file, indent=4, sort_keys=True)
+    print(list(team_dict.keys()))
