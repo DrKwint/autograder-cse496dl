@@ -95,7 +95,8 @@ def score_teams():
                 break
             except IOError as e:
                 print(e)
-                pass
+            except KeyError as e:
+                print(e)
     return team_dict
 
 
