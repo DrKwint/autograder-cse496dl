@@ -101,8 +101,8 @@ if __name__ == "__main__":
     team_dict = score_teams()
 
     # combine existing data with new
-    if os.path.isfile('homework1_score.json'):
-        with open('homework1_score.json', 'r') as json_file:
+    if os.path.isfile('homework1_scores.json'):
+        with open('homework1_scores.json', 'r') as json_file:
             leaderboard_dict = json.load(json_file)
         for key in leaderboard_dict.keys():
             leaderboard_dict[key] = {**leaderboard_dict[key], **team_dict[key]}
@@ -110,6 +110,6 @@ if __name__ == "__main__":
         leaderboard_dict = team_dict
 
     # write data
-    with open('homework1_score.json', 'w') as json_file:
-        json.dump(leaderboard_dict, json_file, indent=4, sort_keys=True)
+    with open('homework1_scores.json', 'w') as json_file:
+        json.dump(leaderboard_dict, json_file, sort_keys=True)
     print(list(team_dict.keys()))
