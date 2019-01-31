@@ -18,7 +18,7 @@ parser.add_argument(
     type=str,
     default='./data/fashion/',
     help='directory where data is located')
-parser.add_argument('--handin_dir', type=str, default='./submissions/H1/')
+parser.add_argument('--handin_dir', type=str, default='./submissions/HW1/')
 args = parser.parse_args()
 
 
@@ -93,7 +93,8 @@ def score_teams():
                 }
                 team_dict[team_name] = {str(unix_now): score_dict}
                 break
-            except IOError:
+            except IOError as e:
+                print(e)
                 pass
     return team_dict
 
