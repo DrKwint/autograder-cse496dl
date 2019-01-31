@@ -1,15 +1,36 @@
 {
   "teams": [
     {
-      "instructors": [
+      "Instructors": [
         "pquint",
         "sscott"
       ]
     },
     {
-      "dropouts": [
+      "Dropouts": [
         "aagrawal",
         "atendle"
+      ]
+    },
+    {
+      "DHS": [
+        "dmle",
+        "hchu",
+        "sshield"
+      ]
+    },
+    {
+      "The Destructors": [
+        "cpeterso",
+        "smaan",
+        "psarzaeim"
+      ]
+    },
+    {
+      "LeastSquares": [
+        "hzhao",
+        "jlou",
+        "pwerdna"
       ]
     }
   ]
