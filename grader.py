@@ -93,8 +93,10 @@ def score_teams():
                 }
                 team_dict[team_name] = {str(unix_now): score_dict}
                 break
-            except IOError:
-                pass
+            except IOError as e:
+                print(e)
+            except KeyError as e:
+                print(e)
     return team_dict
 
 
