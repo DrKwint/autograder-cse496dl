@@ -121,6 +121,7 @@ def score_teams():
                     'metadata': metadata_dict
                 }
                 team_dict[team_name] = {str(unix_now): score_dict}
+                break
     return team_dict
 
 
@@ -144,3 +145,4 @@ if __name__ == "__main__":
     with open('homework1_scores.json', 'w') as json_file:
         json.dump(leaderboard_dict, json_file, sort_keys=True)
     print(list(team_dict.keys()))
+    print(team_dict)
