@@ -39,6 +39,65 @@
         "kphan",
         "ttran"
       ]
+    },
+    {
+      "SEC333": [
+        "cjia",
+        "ypeng"
+      ]
+    },
+    {
+      "Brute Force Everything": [
+        "jchong",
+        "rprajapati",
+        "ele"
+      ]
+    },
+    {
+      "My Model's Training": [
+        "abevins",
+        "brhoadarmer"
+      ]
+    },
+    {
+      "Trash Pandas": [
+        "pmorrow",
+        "rdowney",
+        "slin"
+      ]
+    },
+    {
+      "StarSand": [
+        "jiaqix",
+        "jianxins"
+      ]
+    },
+    {
+      "Impartial": [
+        "abuckwalter",
+        "epenn",
+        "tboswell"
+      ]
+    },
+    {
+      "BioDeep": [
+        "aatefi",
+        "ctliew"
+      ]
+    },
+    {
+      "Dining Philosophers": [
+        "haldekhel",
+        "mostafa",
+        "bsalitros"
+      ]
+    },
+    {
+      "MecanuM": [
+        "haldekhel",
+        "mostafa",
+        "bsalitros"
+      ]
     }
   ]
 }
