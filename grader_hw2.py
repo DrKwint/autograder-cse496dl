@@ -23,10 +23,14 @@ parser.add_argument('--path_prefix', type=str, default='homework_2')
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    cifar100_train_data = np.load('cifar_images.npy')
-    cifar100_train_labels = np.load('cifar_labels.npy')
-    cifar100_test_data = np.load('cifar_images_test.npy')
-    cifar100_test_labels = np.load('cifar_labels_test.npy')
+    cifar100_train_data = np.load(
+        os.path.join(args.data_dir, 'cifar_images.npy'))
+    cifar100_train_labels = np.load(
+        os.path.join(args.data_dir, 'cifar_labels.npy'))
+    cifar100_test_data = np.load(
+        os.path.join(args.data_dir, 'cifar_images_test.npy'))
+    cifar100_test_labels = np.load(
+        os.path.join(args.data_dir, 'cifar_labels_test.npy'))
     train_pair = (cifar100_train_data, cifar100_train_labels)
     test_pair = (cifar100_test_data, cifar100_test_labels)
 
