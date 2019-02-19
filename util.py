@@ -108,7 +108,7 @@ def score_classification(model_directory, data, labels, path_prefix):
         accuracy_t = tf.reduce_mean(
             tf.cast(tf.equal(predictions_t, y), tf.float32))
         confusion_matrix_t = tf.confusion_matrix(
-            labels=y, predictions=predictions_t, num_classes=10)
+            labels=y, predictions=predictions_t)
 
         accuracy, confusion_matrix = session.run(
             [accuracy_t, confusion_matrix_t], {
