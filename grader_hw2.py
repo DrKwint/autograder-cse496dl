@@ -25,10 +25,12 @@ args = parser.parse_args()
 if __name__ == "__main__":
     cifar100_train_data = np.load(
         os.path.join(args.data_dir, 'cifar_images.npy'))
+    cifar100_train_data = np.reshape(cifar100_train_data, [-1, 32, 32, 3])
     cifar100_train_labels = np.load(
         os.path.join(args.data_dir, 'cifar_labels.npy'))
     cifar100_test_data = np.load(
         os.path.join(args.data_dir, 'cifar_images_test.npy'))
+    cifar100_test_data = np.reshape(cifar100_test_data, [-1, 32, 32, 3])
     cifar100_test_labels = np.load(
         os.path.join(args.data_dir, 'cifar_labels_test.npy'))
     train_pair = (cifar100_train_data, cifar100_train_labels)
