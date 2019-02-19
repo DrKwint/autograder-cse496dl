@@ -73,6 +73,21 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
                 }
                 team_dict[team_name] = {str(unix_now): score_dict}
                 break
+            except tf.errors.InvalidArgumentError as e:
+                print(e)
+                train_dict = {
+                    'accuracy': float(0.),
+                    'confusion_matrix': [[0.]]
+                }
+                test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
+                metadata_dict = {'error': str(e)}
+                score_dict = {
+                    'train': train_dict,
+                    'test': test_dict,
+                    'metadata': metadata_dict
+                }
+                team_dict[team_name] = {str(unix_now): score_dict}
+                break
     return team_dict
 
 
