@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import datetime
+import sys
 
 import tensorflow as tf
 
@@ -67,6 +68,7 @@ def score_teams():
     unix_now = unix_time_millis(datetime.datetime.now())
     for team in team_list:
         team_name = list(team.keys())[0]
+        print(team_name)
         for username in list(team.values())[0]:
             try:
                 # train
@@ -115,6 +117,36 @@ def score_teams():
                 }
                 test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
                 metadata_dict = {'error': str(e)}
+                score_dict = {
+                    'train': train_dict,
+                    'test': test_dict,
+                    'metadata': metadata_dict
+                }
+                team_dict[team_name] = {str(unix_now): score_dict}
+                break
+            except tf.errors.InvalidArgumentError as e:
+                print(e.message)
+                train_dict = {
+                    'accuracy': float(0.),
+                    'confusion_matrix': [[0.]]
+                }
+                test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
+                metadata_dict = {'error': e.message}
+                score_dict = {
+                    'train': train_dict,
+                    'test': test_dict,
+                    'metadata': metadata_dict
+                }
+                team_dict[team_name] = {str(unix_now): score_dict}
+                break
+            except:
+                print(sys.exc_info()[0])
+                train_dict = {
+                    'accuracy': float(0.),
+                    'confusion_matrix': [[0.]]
+                }
+                test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
+                metadata_dict = {'error': str(sys.exc_info()[0])}
                 score_dict = {
                     'train': train_dict,
                     'test': test_dict,

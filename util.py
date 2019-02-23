@@ -140,7 +140,7 @@ def score_classification(model_directory, data, labels, path_prefix,
             accuracies.append(accuracy)
             conf_matrices.append(confusion_matrix)
 
-        return np.mean(accuracies), np.sum(conf_matrices)
+        return np.mean(accuracies), np.sum(conf_matrices, axis=0)
 
 
 def unix_time_millis(dt):
