@@ -20,6 +20,7 @@ parser.add_argument(
 parser.add_argument(
     '--handin_dir', type=str, default='./submissions/hw2_public_handin/')
 parser.add_argument('--path_prefix', type=str, default='homework_2')
+parser.add_argument('--batch_size', type=int, default=1000)
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -40,7 +41,8 @@ if __name__ == "__main__":
         team_list = json.load(team_file)['teams']
 
     team_dict = util.score_classification_teams(
-        train_pair, test_pair, team_list, args.handin_dir, args.path_prefix)
+        train_pair, test_pair, team_list, args.handin_dir, args.path_prefix,
+        args.batch_size)
 
     # combine existing data with new
     if os.path.isfile('homework2_scores.json'):

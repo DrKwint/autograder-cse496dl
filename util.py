@@ -1,12 +1,13 @@
 import datetime
-import os
 import json
+import os
 
+import numpy as np
 import tensorflow as tf
 
 
 def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
-                               path_prefix):
+                               path_prefix, batch_size):
     # load datasets
     X_train, y_train = train_pair
     X_test, y_test = test_pair
@@ -21,7 +22,7 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
                 # train
                 train_accuracy, train_confusion_matrix = score_classification(
                     os.path.join(handin_dir, username), X_train, y_train,
-                    path_prefix)
+                    path_prefix, batch_size)
                 train_dict = {
                     'accuracy': float(train_accuracy),
                     'confusion_matrix': train_confusion_matrix.tolist()
@@ -29,7 +30,7 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
                 # test
                 test_accuracy, test_confusion_matrix = score_classification(
                     os.path.join(handin_dir, username), X_test, y_test,
-                    path_prefix)
+                    path_prefix, batch_size)
                 test_dict = {
                     'accuracy': float(test_accuracy),
                     'confusion_matrix': test_confusion_matrix.tolist()
@@ -91,7 +92,8 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
     return team_dict
 
 
-def score_classification(model_directory, data, labels, path_prefix):
+def score_classification(model_directory, data, labels, path_prefix,
+                         batch_size):
     tf.reset_default_graph()
     with tf.Session() as session:
         # load graph structure and weights
@@ -110,12 +112,19 @@ def score_classification(model_directory, data, labels, path_prefix):
         confusion_matrix_t = tf.confusion_matrix(
             labels=y, predictions=predictions_t)
 
-        accuracy, confusion_matrix = session.run(
-            [accuracy_t, confusion_matrix_t], {
-                x: data,
-                y: labels
-            })
-        return accuracy, confusion_matrix
+        n = data.shape[0]
+        accuracies = []
+        conf_matrices = []
+        for _ in range(n // batch_size):
+            accuracy, confusion_matrix = session.run(
+                [accuracy_t, confusion_matrix_t], {
+                    x: data,
+                    y: labels
+                })
+            accuracies.append(accuracy)
+            conf_matrices.append(confusion_matrix)
+
+        return np.mean(accuracies), np.sum(conf_matrices)
 
 
 def unix_time_millis(dt):
