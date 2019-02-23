@@ -49,10 +49,17 @@ if __name__ == "__main__":
         with open('homework2_scores.json', 'r') as json_file:
             leaderboard_dict = json.load(json_file)
 
-        for key in team_dict.keys():
-            leaderboard_dict[key] = {
-                **leaderboard_dict.get(key, dict()),
-                **team_dict[key]
+        for team_key in team_dict.keys():
+            # delete old confusion matrices
+            for time_key in leaderboard_dict[team_key].keys():
+                del leaderboard_dict[team_key][time_key]['train'][
+                    'confusion_matrix']
+                del leaderboard_dict[team_key][time_key]['test'][
+                    'confusion_matrix']
+            # combine new and old dicts
+            leaderboard_dict[team_key] = {
+                **leaderboard_dict.get(team_key, dict()),
+                **team_dict[team_key]
             }
     else:
         leaderboard_dict = team_dict
