@@ -18,6 +18,7 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
     for team in team_list:
         team_name = list(team.keys())[0]
         for username in list(team.values())[0]:
+            print("TEAM: {}\tUSERNAME: {}".format(team, username))
             try:
                 # train
                 train_accuracy, train_confusion_matrix = score_classification(
@@ -89,6 +90,21 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
                 }
                 team_dict[team_name] = {str(unix_now): score_dict}
                 break
+            except tf.errors.ResourceExhaustedError as e:
+                print(e)
+                train_dict = {
+                    'accuracy': float(0.),
+                    'confusion_matrix': [[0.]]
+                }
+                test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
+                metadata_dict = {'error': str(e)}
+                score_dict = {
+                    'train': train_dict,
+                    'test': test_dict,
+                    'metadata': metadata_dict
+                }
+                team_dict[team_name] = {str(unix_now): score_dict}
+                break
     return team_dict
 
 
@@ -115,11 +131,11 @@ def score_classification(model_directory, data, labels, path_prefix,
         n = data.shape[0]
         accuracies = []
         conf_matrices = []
-        for _ in range(n // batch_size):
+        for i in range(n // batch_size):
             accuracy, confusion_matrix = session.run(
                 [accuracy_t, confusion_matrix_t], {
-                    x: data,
-                    y: labels
+                    x: data[i * batch_size:(i + 1) * batch_size],
+                    y: labels[i * batch_size:(i + 1) * batch_size]
                 })
             accuracies.append(accuracy)
             conf_matrices.append(confusion_matrix)
