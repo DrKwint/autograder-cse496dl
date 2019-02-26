@@ -51,13 +51,13 @@ if __name__ == "__main__":
 
         for team_key in team_dict.keys():
             # delete old confusion matrices
-            for time_key in leaderboard_dict[team_key].keys():
-                try:
+            try:
+                for time_key in leaderboard_dict[team_key].keys():
                     del leaderboard_dict[team_key][time_key]['train'][
                         'confusion_matrix']
                     del leaderboard_dict[team_key][time_key]['test'][
                         'confusion_matrix']
-                except KeyError as e:
+            except KeyError as e:
                     pass
             # combine new and old dicts
             leaderboard_dict[team_key] = {
