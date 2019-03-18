@@ -23,7 +23,10 @@ parser.add_argument('--handin_dir', type=str, default='./submissions/HW1/')
 args = parser.parse_args()
 
 
-def score(model_directory, data, labels, path_prefix='homework_1'):
+def score_classification_accuracy(model_directory,
+                                  data,
+                                  labels,
+                                  path_prefix='homework_1'):
     tf.reset_default_graph()
     with tf.Session() as session:
         # load graph structure and weights
@@ -55,7 +58,7 @@ def unix_time_millis(dt):
     return (dt - epoch).total_seconds() * 1000.0
 
 
-def score_teams():
+def score_teams_classification_accuracy():
     with open(args.team_file, 'r') as team_file:
         team_list = json.load(team_file)['teams']
 
@@ -72,14 +75,14 @@ def score_teams():
         for username in list(team.values())[0]:
             try:
                 # train
-                train_accuracy, train_confusion_matrix = score(
+                train_accuracy, train_confusion_matrix = score_classification_accuracy(
                     os.path.join(args.handin_dir, username), X_train, y_train)
                 train_dict = {
                     'accuracy': float(train_accuracy),
                     'confusion_matrix': train_confusion_matrix.tolist()
                 }
                 # test
-                test_accuracy, test_confusion_matrix = score(
+                test_accuracy, test_confusion_matrix = score_classification_accuracy(
                     os.path.join(args.handin_dir, username), X_test, y_test)
                 test_dict = {
                     'accuracy': float(test_accuracy),
@@ -158,7 +161,7 @@ def score_teams():
 
 
 if __name__ == "__main__":
-    team_dict = score_teams()
+    team_dict = score_teams_classification_accuracy()
 
     # combine existing data with new
     if os.path.isfile('homework1_scores.json'):

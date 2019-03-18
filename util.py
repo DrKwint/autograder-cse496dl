@@ -2,15 +2,34 @@ import datetime
 import json
 import os
 
+import gym
 import numpy as np
 import tensorflow as tf
 
+import atari_wrappers
 
-def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
-                               path_prefix, batch_size):
-    # load datasets
-    X_train, y_train = train_pair
-    X_test, y_test = test_pair
+
+def score_teams(task,
+                team_list,
+                handin_dir,
+                path_prefix,
+                batch_size=None,
+                train_pair=None,
+                test_pair=None,
+                env_name=None):
+    if task == 'classification':
+        if batch_size is None:
+            print("BATCH_SIZE CANNOT BE NONE FOR CLASSIFICATION")
+            exit()
+        # load datasets
+        X_train, y_train = train_pair
+        X_test, y_test = test_pair
+    elif task == 'reinforcement_learning':
+        if env_name is None:
+            print("ENV_NAME CANNOT BE NONE FOR REINFORCEMENT LEARNING")
+            exit()
+        env = atari_wrappers.wrap_deepmind(
+            atari_wrappers.make_atari(env_name), frame_stack=True)
 
     # score assignments
     team_dict = dict()
@@ -20,22 +39,33 @@ def score_classification_teams(train_pair, test_pair, team_list, handin_dir,
         for username in list(team.values())[0]:
             print("TEAM: {}\tUSERNAME: {}".format(team, username))
             try:
+                model_directory = os.path.join(handin_dir, username)
                 # train
-                train_accuracy, train_confusion_matrix = score_classification(
-                    os.path.join(handin_dir, username), X_train, y_train,
-                    path_prefix, batch_size)
-                train_dict = {
-                    'accuracy': float(train_accuracy),
-                    'confusion_matrix': train_confusion_matrix.tolist()
-                }
+                if task == 'classification':
+                    train_accuracy, train_confusion_matrix = score_classification(
+                        model_directory, X_train, y_train, path_prefix,
+                        batch_size)
+                    train_dict = {
+                        'accuracy': float(train_accuracy),
+                        'confusion_matrix': train_confusion_matrix.tolist()
+                    }
                 # test
-                test_accuracy, test_confusion_matrix = score_classification(
-                    os.path.join(handin_dir, username), X_test, y_test,
-                    path_prefix, batch_size)
-                test_dict = {
-                    'accuracy': float(test_accuracy),
-                    'confusion_matrix': test_confusion_matrix.tolist()
-                }
+                if task == 'reinforcement_learning':
+                    total_reward, episode_rewards, episode_lengths = score_reward(
+                        model_directory, env, path_prefix)
+                    test_dict = {
+                        'total_reward': float(total_reward),
+                        'episode_rewards': episode_rewards,
+                        'episode_lengths': episode_lengths
+                    }
+                elif task == 'classification':
+                    test_accuracy, test_confusion_matrix = score_classification(
+                        model_directory, X_test, y_test, path_prefix,
+                        batch_size)
+                    test_dict = {
+                        'accuracy': float(test_accuracy),
+                        'confusion_matrix': test_confusion_matrix.tolist()
+                    }
                 # metadata
                 metadata_dict = {}
                 # combined score dict
@@ -141,6 +171,41 @@ def score_classification(model_directory, data, labels, path_prefix,
             conf_matrices.append(confusion_matrix)
 
         return np.mean(accuracies), np.sum(conf_matrices, axis=0)
+
+
+def play_episode(session, env, input_ph, q_vals):
+    obs = env.reset()
+    step = 0
+    ep_reward = 0
+    while True:
+        action = np.argmax(session.run(q_vals, {input_ph: obs}), axis=1)
+        obs, reward, done, _ = env.step(action)
+        ep_reward += reward
+        step += 1
+        if done: break
+    return ep_reward, step
+
+
+def score_reward(model_directory, env, path_prefix, episodes=100):
+    tf.reset_default_graph()
+    with tf.Session() as session:
+        # load graph structure and weights
+        saver = tf.train.import_meta_graph(
+            os.path.join(model_directory, path_prefix + '.meta'))
+        saver.restore(session, os.path.join(model_directory, path_prefix))
+
+        x = session.graph.get_tensor_by_name('input_placeholder:0')
+        output = session.graph.get_tensor_by_name('output:0')
+
+        # run through the environment
+        rewards = []
+        steps = []
+        for _ in range(episodes):
+            ep_reward, ep_step = play_episode(session, env, x, output)
+            rewards.append(ep_reward)
+            steps.append(ep_step)
+
+        return np.sum(rewards), rewards, steps
 
 
 def unix_time_millis(dt):
