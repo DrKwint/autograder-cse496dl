@@ -13,7 +13,7 @@ parser.add_argument(
     type=str,
     help='json containing teams')
 parser.add_argument(
-    '--handin_dir', type=str, default='./submissions/hw2_public_handin/')
+    '--handin_dir', type=str, default='./submissions/hw3_public_handin/')
 parser.add_argument('--path_prefix', type=str, default='homework_3')
 parser.add_argument('--env', type=str, default='SeaquestNoFrameskip-v4')
 args = parser.parse_args()
