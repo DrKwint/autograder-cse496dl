@@ -193,6 +193,7 @@ def play_episode(session, env, input_ph, q_vals):
     step = 0
     ep_reward = 0
     while True:
+        obs = np.expand_dims(obs, axis=0)
         action = np.argmax(session.run(q_vals, {input_ph: obs}), axis=1)
         obs, reward, done, _ = env.step(action)
         ep_reward += reward
