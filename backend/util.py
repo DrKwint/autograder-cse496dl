@@ -8,6 +8,7 @@ import tensorflow as tf
 
 import atari_wrappers
 
+EP_STEP_LIMIT = 1000
 
 def score_teams(task,
                 team_list,
@@ -192,9 +193,10 @@ def play_episode(session, env, input_ph, q_vals):
     obs = env.reset()
     step = 0
     ep_reward = 0
-    while True:
+    while step < EP_STEP_LIMIT:
         obs = np.expand_dims(obs, axis=0)
-        action = np.argmax(session.run(q_vals, {input_ph: obs}), axis=1)
+        q_vals_output = session.run(q_vals, {input_ph: obs})
+        action = np.argmax(q_vals_output, axis=1)
         obs, reward, done, _ = env.step(action)
         ep_reward += reward
         step += 1
@@ -216,8 +218,10 @@ def score_reward(model_directory, env, path_prefix, episodes=100):
         # run through the environment
         rewards = []
         steps = []
-        for _ in range(episodes):
+        for i in range(episodes):
+            print('ep {}'.format(i))
             ep_reward, ep_step = play_episode(session, env, x, output)
+            print('score {} @ {} steps'.format(ep_reward, ep_step))
             rewards.append(ep_reward)
             steps.append(ep_step)
 
