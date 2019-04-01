@@ -57,6 +57,11 @@ const TeamCardReward = (props) => {
                       height={200}
                     />
                   </Col>
+                  {props.team.meta_data.error ? (
+                      <Col xs={12}>
+                        Error: {props.team.meta_data.error}
+                      </Col>
+                  ) : null}
                 </Row>
               </CardBody>
             </Card>
