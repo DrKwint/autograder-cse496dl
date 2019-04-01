@@ -10,6 +10,7 @@ import atari_wrappers
 
 EP_STEP_LIMIT = 1000
 
+
 def score_teams(task,
                 team_list,
                 handin_dir,
@@ -150,7 +151,21 @@ def score_teams(task,
                     'metadata': metadata_dict
                 }
                 team_dict[team_name] = {str(unix_now): score_dict}
-            
+            except tf.errors.OutOfRangeError as e:
+                print(e)
+                train_dict = {
+                    'accuracy': float(0.),
+                    'confusion_matrix': [[0.]]
+                }
+                test_dict = {'accuracy': float(0.), 'confusion_matrix': [[0.]]}
+                metadata_dict = {'error': str(e)}
+                score_dict = {
+                    'train': train_dict,
+                    'test': test_dict,
+                    'metadata': metadata_dict
+                }
+                team_dict[team_name] = {str(unix_now): score_dict}
+
     return team_dict
 
 
