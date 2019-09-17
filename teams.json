@@ -7,102 +7,23 @@
       ]
     },
     {
-      "Dropouts": [
-        "aagrawal",
-        "atendle"
+      "Slurmdog Millionaires": [
+        "sircole",
+        "lhagen",
+        "Suhaib Shaikh"
       ]
     },
     {
-      "DHS": [
-        "dmle",
-        "hchu",
-        "sshield"
+      "Hitchhikers Guide to Parameter Space": [
+        "bmoore49",
+        "priyankac"
       ]
     },
     {
-      "The Destructors": [
-        "cpeterso",
-        "smaan",
-        "psarzaeim"
-      ]
-    },
-    {
-      "LeastSquares": [
-        "hzhao",
-        "jlou"
-      ]
-    },
-    {
-      "Incompetent Guineapigs": [
-        "ihowell",
-        "kphan",
-        "ttran"
-      ]
-    },
-    {
-      "SEC333": [
-        "cjia",
-        "ypeng",
-        "pwerdna"
-      ]
-    },
-    {
-      "My Model's Training": [
-        "abevins",
-        "brhoadarmer"
-      ]
-    },
-    {
-      "Trash Pandas": [
-        "pmorrow",
-        "rdowney",
-        "slin"
-      ]
-    },
-    {
-      "StarSand": [
-        "jiaqix",
-        "jianxins"
-      ]
-    },
-    {
-      "Impartial": [
-        "abuckwalter",
-        "epenn",
-        "tboswell"
-      ]
-    },
-    {
-      "BioDeep": [
-        "aatefi",
-        "cliew"
-      ]
-    },
-    {
-      "Dining Philosophers": [
-        "haldekhel",
-        "mostafa",
-        "bsalitros"
-      ]
-    },
-    {
-      "MecanuM": [
-        "hsdt",
-        "cdempsey4",
-        "jchong",
-        "rprajapati"
-      ]
-    },
-    {
-      "CXR": [
-        "cmendozasa",
-        "jdai",
-        "ecarpe"
-      ]
-    },
-    {
-      "Just in Time": [
-        "gwirka"
+      "Group 3": [
+        "anooka",
+        "tbarker",
+        "kgorla"
       ]
     }
   ]
