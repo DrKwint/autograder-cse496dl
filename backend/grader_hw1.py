@@ -19,7 +19,7 @@ parser.add_argument(
     type=str,
     default='./data/fashion/',
     help='directory where data is located')
-parser.add_argument('--handin_dir', type=str, default='./submissions/HW1/')
+parser.add_argument('--handin_dir', type=str, default='/work/cse479/')
 args = parser.parse_args()
 
 
@@ -75,8 +75,9 @@ def score_teams_classification_accuracy():
         for username in list(team.values())[0]:
             try:
                 # train
+                path = os.path.join(args.handin_dir, username, 'handin')
                 train_accuracy, train_confusion_matrix = score_classification_accuracy(
-                    os.path.join(args.handin_dir, username), X_train, y_train)
+                    path, X_train, y_train)
                 train_dict = {
                     'accuracy': float(train_accuracy),
                     'confusion_matrix': train_confusion_matrix.tolist()

@@ -2,7 +2,7 @@
   "teams": [
     {
       "Instructors": [
-        "pquint",
+        "equint",
         "sscott"
       ]
     },
@@ -10,7 +10,7 @@
       "Slurmdog Millionaires": [
         "sircole",
         "lhagen",
-        "Suhaib Shaikh"
+        "sshaikh"
       ]
     },
     {
@@ -24,6 +24,65 @@
         "anooka",
         "tbarker",
         "kgorla"
+      ]
+    },
+    {
+      "ReGIRLarizers": [
+        "skunde",
+        "jiyoungl"
+      ]
+    },
+    {
+      "Deep Sleeping": [
+        "cwu10",
+        "xinyanxie",
+        "yxia"
+      ]
+    },
+    {
+      "Group 6": [
+        "cmiao",
+        "jforbes",
+        "zmliao"
+      ]
+    },
+    {
+      "Friday": [
+        "bmiddle",
+        "ashraful",
+        "msenior"
+      ]
+    },
+    {
+      "Taorht Peed Cheston": [
+        "iaskey",
+        "hdorhout"
+      ]
+    },
+    {
+      "Another Group Name": [
+        "jifland",
+        "ajohnson"
+      ]
+    },
+    {
+      "TBD": [
+        "yshi",
+        "lwang31",
+        "zhjm"
+      ]
+    },
+    {
+      "Eagle Eye": [
+        "jiating",
+        "linwang",
+        "qhu5"
+      ]
+    },
+    {
+      "Training Wheels": [
+        "sroscoe2",
+        "khatrics16"
       ]
     }
   ]
