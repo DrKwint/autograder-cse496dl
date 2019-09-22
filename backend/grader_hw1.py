@@ -76,6 +76,7 @@ def score_teams_classification_accuracy():
             try:
                 # train
                 path = os.path.join(args.handin_dir, username, 'handin')
+                print(path)
                 train_accuracy, train_confusion_matrix = score_classification_accuracy(
                     path, X_train, y_train)
                 train_dict = {
