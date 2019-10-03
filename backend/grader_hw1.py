@@ -75,7 +75,7 @@ def score_teams_classification_accuracy():
         for username in list(team.values())[0]:
             try:
                 # train
-                path = os.path.join(args.handin_dir, username, 'handin')
+                path = os.path.join(args.handin_dir, username, 'handin/')
                 print(path)
                 train_accuracy, train_confusion_matrix = score_classification_accuracy(
                     path, X_train, y_train)
@@ -85,7 +85,7 @@ def score_teams_classification_accuracy():
                 }
                 # test
                 test_accuracy, test_confusion_matrix = score_classification_accuracy(
-                    os.path.join(args.handin_dir, username), X_test, y_test)
+                    os.path.join(args.handin_dir, username, 'handin/'), X_test, y_test)
                 test_dict = {
                     'accuracy': float(test_accuracy),
                     'confusion_matrix': test_confusion_matrix.tolist()
