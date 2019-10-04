@@ -6,5 +6,5 @@
 #SBATCH --gres=gpu:1
 
 module load tensorflow-gpu/py37/1.14
-python ./backend/grader_hw1.py
-rsync -e 'ssh -p 22' -avz ./homework1_scores.json equint@cse.unl.edu:/home/ugrad/equint/public_html/teaching/unl_classes/cse479/homework1_leaderboard/
+python ./backend/grader_hw2.py
+rsync -e 'ssh -p 22' -avz ./homework2_scores.json equint@cse.unl.edu:/home/ugrad/equint/public_html/teaching/unl_classes/cse479/homework2_leaderboard/

@@ -15,20 +15,20 @@ parser.add_argument(
 parser.add_argument(
     '--data_dir',
     type=str,
-    default='./data/cifar100/',
+    default='./data/',
     help='directory where data is located')
 parser.add_argument(
-    '--handin_dir', type=str, default='./submissions/hw2_public_handin/')
+    '--handin_dir', type=str, default='./work/cse479')
 parser.add_argument('--path_prefix', type=str, default='homework_2')
 parser.add_argument('--batch_size', type=int, default=1000)
 args = parser.parse_args()
 
 if __name__ == "__main__":
     cifar100_train_data = np.load(
-        os.path.join(args.data_dir, 'cifar_images.npy'))
+        os.path.join(args.data_dir, 'cifar_images_train.npy'))
     cifar100_train_data = np.reshape(cifar100_train_data, [-1, 32, 32, 3])
     cifar100_train_labels = np.load(
-        os.path.join(args.data_dir, 'cifar_labels.npy'))
+        os.path.join(args.data_dir, 'cifar_labels_train.npy'))
     cifar100_test_data = np.load(
         os.path.join(args.data_dir, 'cifar_images_test.npy'))
     cifar100_test_data = np.reshape(cifar100_test_data, [-1, 32, 32, 3])
