@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import { connect } from 'react-redux';
 import {
     Navbar,
     Container,
-} from "reactstrap";
+} from 'reactstrap';
 
 import cn from 'classnames';
 

@@ -1,61 +1,25 @@
-import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
 
-import Header from "components/Header";
-import Footer from "components/Footer";
-import Sidebar from "components/Sidebar";
-
-import Dashboard from "containers/Dashboard";
-
-import PerfectScrollbar from 'perfect-scrollbar';
-
-var ps;
-
-class App extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            backgroundColor: "black",
-            activeColor: "info",
-        }
-    }
-    componentDidMount() {
-        if (navigator.platform.indexOf("Win") > -1) {
-            ps = new PerfectScrollbar(this.refs.mainPanel);
-            document.body.classList.toggle("perfect-scrollbar-on");
-        }
-    }
-    componentWillUnmount() {
-        if (navigator.platform.indexOf("Win") > -1) {
-            ps.destroy();
-            document.body.classList.toggle("perfect-scrollbar-on");
-        }
-    }
-
-    handleActiveClick = (color) => {
-        this.setState({ activeColor: color });
-    }
-    handleBgClick = (color) => {
-        this.setState({ backgroundColor: color });
-    }
-
-    render() {
-    return (
-        <div className="App">
-            <div className="wrapper">
-                <Sidebar
-                    {...this.props}
-                    bgColor={this.state.backgroundColor}
-                    activeColor={this.state.activeColor}
-                />
-                <div className="main-panel" ref="mainPanel">
-                    <Header {...this.props} />
-                    <Dashboard />
-                    <Footer fluid />
-                </div>
-            </div>
-        </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
 export default App;
