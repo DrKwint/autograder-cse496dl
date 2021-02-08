@@ -30,7 +30,7 @@ const columns = [
     { field: 'seconds', headerName: '2nds', type: 'number', width: 100 },
     { field: 'thirds', headerName: '3rds', type: 'number', width: 100 },
     { field: 'valid_submissions', headerName: 'Valid Submissions', type: 'number', width: 180, sortable: false },
-    { field: 'last_updated', headerName: 'Updated', width: 135, sortable: false, valueFormatter: dateFormatter},
+    { field: 'timestamp', headerName: 'Updated', width: 135, sortable: false, valueFormatter: dateFormatter},
 ];
 
 class Dashboard extends React.Component {
