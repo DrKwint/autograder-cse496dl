@@ -18,7 +18,7 @@ class Header extends React.Component {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6">
-                        CSE 496/896 Standings{this.props.title ? `: ${this.props.title}` : null}
+                        {this.props.title ? this.props.title : "Loading..."}
                     </Typography>
                 </Toolbar>
             </AppBar>
