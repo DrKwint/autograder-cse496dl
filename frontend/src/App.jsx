@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Header from "components/Header";
+import Header from "containers/Header";
 
 import Dashboard from "containers/Dashboard";
 
@@ -41,9 +41,8 @@ class App extends Component {
             <div className="App">
                 <div className="wrapper">
                     <div className="main-panel" ref="mainPanel">
-                        <Header {...this.props} />
+                        <Header />
                         <Dashboard />
-                        {/* <Footer fluid /> */}
                     </div>
                 </div>
             </div>

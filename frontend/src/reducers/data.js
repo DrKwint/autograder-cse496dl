@@ -5,6 +5,7 @@ import {
     UPDATE_DATA_TYPE,
     UPDATE_SCORE_DATA,
     UPDATE_TITLE,
+    UPDATE_LAST_MODIFIED,
 } from 'actions/dataActions';
 
 const compareStrings = (str1, str2) => (str1 > str2) ? 1 : ((str1 < str2) ? -1 : 0);
@@ -14,6 +15,7 @@ const initialState = Immutable.Map({
     retrievingData: true,
     title: "",
     dataType: "classification",
+    lastModified: null,
 });
 
 const msToDate = (ms) => {
@@ -39,6 +41,9 @@ const data = (state = initialState, action) => {
 
     case UPDATE_DATA_TYPE:
         return state.set('dataType', action.d_type);
+
+    case UPDATE_LAST_MODIFIED:
+        return state.set('lastModified', action.lastModified);
 
     default:
         return state;

@@ -2,6 +2,7 @@ export const FETCH_SCORE_DATA = 'FETCH_SCORE_DATA';
 export const UPDATE_SCORE_DATA = 'UPDATE_SCORE_DATA';
 export const UPDATE_TITLE = 'UPDATE_TITLE';
 export const UPDATE_DATA_TYPE = 'UPDATE_DATA_TYPE';
+export const UPDATE_LAST_MODIFIED = 'UPDATE_LAST_MODIFIED';
 
 export const updateScoreData = (data) => ({
     type: UPDATE_SCORE_DATA,
@@ -16,6 +17,11 @@ export const updateTitle = (title) => ({
 export const updateDataType = (d_type) => ({
     type: UPDATE_DATA_TYPE,
     d_type,
+});
+
+export const updateLastModified = (lastModified) => ({
+    type: UPDATE_LAST_MODIFIED,
+    lastModified,
 });
 
 export const fetchScoreData = () => (dispatch) => {
@@ -46,7 +52,10 @@ export const fetchScoreData = () => (dispatch) => {
 
             return fetch(scoreRequest, scoreInit);
         })
-        .then(res => res.json())
+        .then(res => {
+            dispatch(updateLastModified(res.headers.get('Last-Modified')));
+            return res.json();
+        })
         .then((data) => dispatch(updateScoreData(data)))
         .catch(console.error);
 }
